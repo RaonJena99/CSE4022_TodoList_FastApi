@@ -3,6 +3,12 @@
         "id": 1741518639447,
         "title": "20212022",
         "description": "\uc774\uc608\uc900",
+        "completed": true
+    },
+    {
+        "id": 1742141430577,
+        "title": "\uc548\ub155 \uc548\ub155",
+        "description": "\uadf8\ub798 \uc548\ub155",
         "completed": false
     }
 ]

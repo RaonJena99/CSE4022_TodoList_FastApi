@@ -73,7 +73,12 @@ body {
 }
 
 .detail_box{
-    width: 50vw;
+    width: 40vw;
+    font-family: system-ui;
+}
+
+.date_box{
+    color: grey;
     font-family: system-ui;
 }
 
