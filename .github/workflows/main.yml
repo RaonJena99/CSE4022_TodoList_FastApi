@@ -3,7 +3,7 @@ name: Deploy to Server
 on:
   push:
     branches:
-      - main  # main 브랜치에 push되면 실행
+      - master  # main 브랜치에 push되면 실행
 
 jobs:
   deploy:
