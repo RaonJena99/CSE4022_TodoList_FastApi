@@ -1,0 +1,31 @@
+name: Deploy to Server
+
+on:
+  push:
+    branches:
+      - main  # main 브랜치에 push되면 실행
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        
+      - name: Setup SSH Key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDbvXpWSDMsK3M+Y4C/tTgxAJBdal27ObUzNVH7rtJPp+sWU/fW9xwUwhI9/DJKhRlMInPF+fve0l75qIThdxhXldhkn1Yf6HwOmTyqBDzbCmX6YkJwE3rhwHazQ0HF6j3tTmrzIhO6Aika2mwmPv4X84VSfCcvxOtHYqmau+zmioE4SksvhWGteWbh1INPv6b0UqCnDaJXd/Je2HopMvo22a6D5EYpg/i9QCguuojMxaWBhLI0SdTeuXKZl0NuzY34G0ZhWp6TKLme6Kl2aiufn7sp282hIa26qRDg7IwVwkjCYC7nKvvO596ZFJ9szQd7KwXpD+qOJI+bRdMl8UasXU2PYOxwSVlER2jm1vhPvlBpfbhgtj/mrGq2LMv3GtEdn3ofV9A4mh4bauyqAMdNyJQJ0hNbt8IMYfzfYykJxb0aNS4hyAUZUzrBPr2Mvppo6GcDRf3B2W73rdqVllg1YvaVvrTL74Mry0zusNZhkdPu0xbg4spFcDQuqvAnbkc= iyejun@iyejun-ui-MacBookAir.local }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ 3.34.178.181 }} >> ~/.ssh/known_hosts
+
+      - name: Deploy to Server
+        run: |
+          ssh ${{ ubuntu }}@${{ 3.34.178.181 }} << 'EOF'
+            cd $DEPLOY_PATH
+            git pull origin main
+            npm install  # 필요한 경우 패키지 설치 (Node.js 프로젝트라면)
+            pm2 restart all  # Node.js 애플리케이션 실행 (선택 사항)
+            exit
+          EOF
