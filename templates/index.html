@@ -19,7 +19,7 @@
         cols="30"
         required
         ></textarea>
-      <button type="submit" class="butt">Add To-Do</button>
+      <button type="submit" class="butt">Add</button>
     </form>
   </div>
   <ul id="list"></ul>
@@ -96,6 +96,9 @@
     async function fetchTodos(){
       const response = await fetch('/todos');
       const todos = await response.json();
+
+      todos.sort((a, b) => b.id - a.id);
+
       const todo_list = document.getElementById('list');
       todo_list.innerHTML = '';
       todos.forEach(todo => {
