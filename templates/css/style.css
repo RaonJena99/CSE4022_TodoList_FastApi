@@ -1,129 +1,119 @@
+@import "reset.css";
+
 body {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    background-color: #3e4248;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
-.main {
-    padding: 0px 5px 10px 30px;
-    border: 2px dashed black;
-    height: 200px;
-    width: 500px;
-    border-radius: 15px;
-}
-
-.main_title{
-    margin: 20px 0px 0px 0px;
-    font-family: cursive;
-}
-
-#todo_form{
+header {
+    width: 100vw;
+    margin-bottom: 20px;
     display: flex;
     justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.page_name{
+    box-sizing: border-box;
+    width: 100vw;
+    padding: 10px;
+    border-bottom: 1px solid rgb(40, 40, 40);
+    font-size:40px;
+    color: white;
+    font-family: Trebuchet MS;
+    cursor: pointer;
+}
+
+.page_date{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 50vw;
+    margin-top: 30px;
+}
+
+.page_day{
+    margin-bottom: 20px;
+    font-size:35px;
+    color: white;
+    font-family: Verdana;
+}
+
+.page_year{
+    font-size:16px;
+    color: #5A5F67;
+    font-family: Verdana;
+}
+
+.add_list{
+    position:absolute;
+    right: 20px;
+    top: 134px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.add_list_img{
+    width: 35px;
+    height: 35px;
+    transition: transform 0.2s;
+    transform-origin: center; 
+}
+
+.add_list_img:hover {
+    transform: scale(1.0857);
+    cursor: pointer;
+}
+
+.add_form {
+    width: 70vw;
+    height: 100px;
+    padding: 0px 30px 0px 20px;
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+    background-color: #37393c;
+    border-radius: 10px;
+}
+
+.add_input {
+    height: 100px;
+    display: flex;
+    justify-content:space-evenly;
     align-items: start;
     flex-direction: column;
 }
 
-#title{
+.add_title {
     border: none;
-    border-bottom: 1.5px dashed black;
+    background: none;
     outline: none;
+    width: 20vw;
+    height: 25px;
+    border-radius: 5px;
+    background-color: #2e2e30;
     font-size: 20px;
-    text-align: center;
-    margin-bottom: 5px;
-    width: 166px;
+    padding: 5px;
 }
 
-#descript{
+.add_descript {
+    border: none;
+    background: none;
+    outline: none;
     resize: none;
-    border: 1.5px dashed rgba(165, 163, 163, 0.905);
-    outline: none;
+    width: 60vw;
+    height: 25px;
     border-radius: 5px;
+    background-color: #2e2e30;
     font-size: 20px;
-    margin-bottom: 2px;
-}
-
-.butt{
-    width: 90px;
-    margin-left: 400px;
-    background-color: white;
-    color: black;
-    border: 2px solid black;
-    border-radius: 5px;
-    font-family: "Gill Sans", sans-serif;
-    font-size: 15px;
-}
-
-.butt:hover{
-    background-color: black;
-    color: white;
-    cursor: pointer;
-}
-
-#list {
-    padding: 0px;
-    border-top: 2px dashed rgba(160, 160, 160, 0.769);
-}
-
-.todo_box{
-    width: 500px;
-    margin: 10px;
-    display: flex;
-    justify-content:space-around;
-    align-items: center;
-    border-bottom: 2px dashed black;
-    padding: 10px;
-}
-
-.detail_box{
-    width: 200px;
-    font-family: system-ui;
-}
-
-.date_box{
-    color: grey;
-    font-family: system-ui;
-}
-
-.completed_box{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    margin: 0px 5px 0px 5px;
-    padding: 0px 5px 0px 5px;
-    border-left: 2px dashed black;
-    border-right: 2px dashed black;
-    font-size: 15px;
-    font-family: Georgia, serif;
-}
-
-#adit_butt {
-    background-color: white;
-    color: black;
-    border: 2px solid black;
-    border-radius: 5px;
-    font-family: "Gill Sans", sans-serif;
-}
-
-#adit_butt:hover{
-    background-color: black;
-    color: white;
-    cursor: pointer;
-}
-
-#del_butt {
-    background-color: white;
-    color: black;
-    border: 2px solid black;
-    border-radius: 5px;
-    margin-left: 5px;
-    font-family: "Gill Sans", sans-serif;
-}
-
-#del_butt:hover{
-    background-color: black;
-    color: white;
-    cursor: pointer;
+    padding: 5px;
 }
