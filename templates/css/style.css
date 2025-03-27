@@ -77,12 +77,12 @@ header {
 .add_form {
     width: 70vw;
     height: 100px;
-    padding: 0px 30px 0px 20px;
+    padding: 0px 20px 0px 20px;
     display: flex;
     justify-content:space-between;
     align-items: center;
     background-color: #37393c;
-    border-radius: 10px;
+    border-radius: 5px;
 }
 
 .add_input {
@@ -103,6 +103,7 @@ header {
     background-color: #2e2e30;
     font-size: 20px;
     padding: 5px;
+    color: white ;
 }
 
 .add_descript {
@@ -116,4 +117,40 @@ header {
     background-color: #2e2e30;
     font-size: 20px;
     padding: 5px;
+    color: white ;
+}
+
+.add_title::placeholder, .add_descript::placeholder {
+    color: #404245;
+}
+
+.add_submit {
+    width: 5vw;
+    height: 30px;
+    border: none;
+    padding: none;
+    border-radius: 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    background: #2e2e30;
+    color: white;
+    font-size: 16px;
+}
+
+.add_submit:hover {
+    background: #212122;
+    cursor: pointer;
+}
+
+.todo_box {
+    width: 70vw;
+    height: 100px;
+    padding: 0px 20px 0px 20px;
+    margin: 10px 0px 10px 0px;
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+    background-color: #37393c;
+    border-radius: 5px;
 }
