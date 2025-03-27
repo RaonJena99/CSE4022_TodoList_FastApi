@@ -154,3 +154,60 @@ header {
     background-color: #37393c;
     border-radius: 5px;
 }
+
+.completed_box {
+    margin: 0px 10px 34px 0px;
+}
+
+#completed_chk {
+    appearance: none; 
+    box-sizing:content-box;
+    background-clip:unset;
+    padding: 0.25em;
+    width: 1.5em;
+    height: 1.5em;
+    border: 1px solid rgb(0, 0, 0);
+    border-radius: 8px;
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+    background:rgb(63, 65, 68);
+}
+
+#completed_chk:hover{
+    background:rgb(86, 88, 92);
+}
+
+#completed_chk:checked::after {
+    content: '✓';
+    color: white;
+    font-size: 1.8em;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+
+.list_item {
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    flex-direction: column;
+    width: 42vw;
+    height: 60px;
+}
+
+.list_title{
+    font-size: 22px;
+    margin-bottom: 5px;
+    color: white;
+    margin-bottom: 10px;
+}
+
+.list_descript{
+    overflow-wrap: break-word;
+    width: 40vw;
+    font-size: 14px;
+    color: rgb(104, 104, 104);
+}

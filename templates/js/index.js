@@ -97,12 +97,14 @@ async function AddList() {
         add_title.placeholder = "title";
         add_title.spellcheck = false;
         add_title.required = true;
+        add_title.maxLength = "15";
 
         const add_descript = document.createElement('textarea');
         add_descript.className = "add_descript";
         add_descript.placeholder = "description";
         add_descript.spellcheck = false;
         add_descript.required = true;
+        add_descript.maxLength = "75";
 
         const add_submit = document.createElement('button');
         add_submit.className = "add_submit";
