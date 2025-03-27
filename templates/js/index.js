@@ -49,28 +49,26 @@ async function fetchTodos(){
             completed_chk.checked = true;
         }
 
-        const adit_butt = document.createElement('button');
-        adit_butt.className =todo.id;
-        adit_butt.id = "adit_butt";
-        adit_butt.innerText = "Edit";
-        adit_butt.addEventListener("click", EditTodo);
+        const add_more = document.createElement('div');
+        add_more.className = "add_more";
 
-        const del_butt = document.createElement('button');
-        del_butt.className = todo.id;
-        del_butt.id = "del_butt";
-        del_butt.innerText = "Delete";
-        del_butt.addEventListener("click", DelTodo);
+        const add_more_img = document.createElement('img');
+        add_more_img.id = todo.id;
+        add_more_img.className = "add_more_img";
+        add_more_img.src = "assets/more.svg";
+
+        add_more_img.addEventListener("click", More_detail);
 
         list_item.appendChild(list_title);
         list_item.appendChild(list_descript);
 
         completed_box.appendChild(completed_chk);
+        add_more.appendChild(add_more_img);
 
         todo_box.appendChild(completed_box);
         todo_box.appendChild(list_item);
         todo_box.appendChild(date_box);
-        todo_box.appendChild(adit_butt);
-        todo_box.appendChild(del_butt);
+        todo_box.appendChild(add_more);
 
         todo_list.appendChild(todo_box);
     });
@@ -117,6 +115,10 @@ async function AddList() {
         add_form.appendChild(add_submit);
 
         main.appendChild(add_form);
+
+        setTimeout(() => {
+            add_form.classList.add("active");
+        }, 0);
     }
 }
 
@@ -209,6 +211,49 @@ async function DelTodo(edit){
             method : "DELETE",
         });
         fetchTodos();
+    }
+}
+
+async function More_detail(event) {
+    const parent = event.target.closest("div");
+    const id = event.target.id;
+
+    const edit_butt = document.createElement('button');
+    edit_butt.className =id;
+    edit_butt.id = "edit_butt";
+    edit_butt.innerText = "Edit";
+    edit_butt.addEventListener("click", EditTodo);
+
+    const del_butt = document.createElement('button');
+    del_butt.className = id;
+    del_butt.id = "del_butt";
+    del_butt.innerText = "Delete";
+    del_butt.addEventListener("click", DelTodo);
+
+    const more_box = document.createElement("div");
+    more_box.className = "more_box";
+    
+    more_box.appendChild(edit_butt);
+    more_box.appendChild(del_butt);
+
+    const more_arrow = document.createElement("div");
+    more_arrow.className = "more_arrow";
+
+    const child1 = parent.querySelector(".more_box");
+    const child2 = parent.querySelector(".more_arrow");
+
+
+    if(child1) {
+        child1.remove();
+        child2.remove();
+    }
+    else {
+        parent.appendChild(more_box);
+        parent.appendChild(more_arrow);
+
+        setTimeout(() => {
+            more_box.classList.add("active");
+        }, 0);
     }
 }
 
