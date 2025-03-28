@@ -33,12 +33,12 @@
         "id": 1743084524242,
         "title": "\uc548\ub155\ud558\uc138\uc694",
         "description": "\ub124, \uc548\ub155\ud558\uc138\uc694",
-        "completed": true
+        "completed": false
     },
     {
         "id": 1743097909972,
         "title": "\uadf8\ub798\uc694",
         "description": "\ub09c \uafc8\uc774 \uc788\uc5b4\uc694",
-        "completed": false
+        "completed": true
     }
 ]

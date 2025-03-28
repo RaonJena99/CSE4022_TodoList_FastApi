@@ -248,6 +248,8 @@ async function More_detail(event) {
         child2.remove();
     }
     else {
+        document.querySelectorAll(".more_box, .more_arrow").forEach(el => el.remove());
+        
         parent.appendChild(more_box);
         parent.appendChild(more_arrow);
 
