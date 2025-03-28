@@ -76,14 +76,15 @@ async function fetchTodos(){
 }
 
 async function AddList() {
-    const main = document.querySelector("main");
+    Minimization();
 
     const add = document.querySelector(".add_form");
-
     if (add){
         add.remove();
     }
     else {
+        const main = document.querySelector("main");
+        
         const add_form = document.createElement('form');
         add_form.className = "add_form";
         add_form.addEventListener("submit",CreateList);
@@ -148,6 +149,8 @@ async function CreateList (event) {
 }
 
 async function EditTodo(edit){
+    Minimization();
+
     const id = edit.target.className;
 
     Swal.fire({
@@ -195,6 +198,8 @@ async function EditTodo(edit){
 }
 
 async function EditChk(edit){
+    Minimization();
+
     const id = edit.target.className;
     const res = await fetch(`/check/${id}`,{
         method : "PUT",
@@ -206,6 +211,8 @@ async function EditChk(edit){
 }
 
 async function DelTodo(edit){
+    Minimization();
+
     Swal.fire({
         title: "Delete?",
         showCancelButton: true,
@@ -256,8 +263,7 @@ async function More_detail(event) {
         child2.remove();
     }
     else {
-        document.querySelectorAll(".more_box, .more_arrow").forEach(el => el.remove());
-
+        Minimization();
         parent.appendChild(more_box);
         parent.appendChild(more_arrow);
 
@@ -265,6 +271,10 @@ async function More_detail(event) {
             more_box.classList.add("active");
         }, 0);
     }
+}
+
+function Minimization() {
+    document.querySelectorAll(".more_box, .more_arrow").forEach(el => el.remove());
 }
 
 add_list.addEventListener("click", AddList);
