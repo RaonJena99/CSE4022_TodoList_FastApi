@@ -1,6 +1,32 @@
 const add_list = document.querySelector(".add_list_img");
 const page_title = document.querySelector(".page_name");
 
+const day = new Map([
+    [0, "Sunday"],
+    [1, "Monday"],
+    [2, "Tuesday"],
+    [3, "Wednesday"],
+    [4, "Thursday"],
+    [5, "Friday"],
+    [6, "Saturday"]
+]);
+
+
+const month = new Map([
+    [0, "Jan"],
+    [1, "Feb"],
+    [2, "Mar"],
+    [3, "Apr"],
+    [4, "May"],
+    [5, "Jun"],
+    [6, "Jul"],
+    [7, "Aug"],
+    [8, "Sep"],
+    [9, "Oct"],
+    [10, "Nov"],
+    [11, "Dec"],
+]);
+
 async function Reload() {
     location.reload(true);
 }
@@ -84,7 +110,7 @@ async function AddList() {
     }
     else {
         const main = document.querySelector("main");
-        
+
         const add_form = document.createElement('form');
         add_form.className = "add_form";
         add_form.addEventListener("submit",CreateList);
@@ -277,7 +303,16 @@ function Minimization() {
     document.querySelectorAll(".more_box, .more_arrow").forEach(el => el.remove());
 }
 
+async function Check_today(params) {
+    let today = new Date();
+    document.querySelector(".page_day").innerText = day.get(today.getDay());
+    document.querySelector(".page_year").innerText = `${month.get(today.getMonth())} ${today.getDate()}, ${today.getFullYear()}`;
+}
+
 add_list.addEventListener("click", AddList);
 page_title.addEventListener("click", Reload);
+
+Check_today();
+setInterval(Check_today,1000)
 
 fetchTodos();
