@@ -42,6 +42,7 @@ async function fetchTodos(){
         completed_chk.id = "completed_chk";
         completed_chk.type = "checkbox";
         completed_chk.addEventListener("click", EditChk);
+
         if(todo.completed == false){
             completed_chk.checked = false;
         }
@@ -205,13 +206,20 @@ async function EditChk(edit){
 }
 
 async function DelTodo(edit){
-    if(confirm("Delete?")){
-        const id = edit.target.className;
-        const res  = await fetch(`/todos/${id}`,{
-            method : "DELETE",
-        });
-        fetchTodos();
-    }
+    Swal.fire({
+        title: "Delete?",
+        showCancelButton: true,
+        confirmButtonText: 'Yes',
+        cancelButtonText: 'No'
+    }).then(async (result) => {
+        if (result.isConfirmed) {
+            const id = edit.target.className;
+            const res  = await fetch(`/todos/${id}`,{
+                method : "DELETE",
+            });
+            fetchTodos();
+        }
+    });
 }
 
 async function More_detail(event) {
@@ -249,7 +257,7 @@ async function More_detail(event) {
     }
     else {
         document.querySelectorAll(".more_box, .more_arrow").forEach(el => el.remove());
-        
+
         parent.appendChild(more_box);
         parent.appendChild(more_arrow);
 
