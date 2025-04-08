@@ -80,6 +80,18 @@ def test_delete_todo():
     assert response.status_code == 200
     assert response.json()["message"] == "To-Do item deleted"
 
+def test_check_todo():
+    todo = {"id": 99, "title": "test", "description": "testing", "completed": False}
+    client.post("/todos", json=todo)
+    response = client.put("/check/99")
+    assert response.status_code == 200
+    assert response.json()[0]["completed"] is True
+
+def test_root_page():
+    response = client.get("/")
+    assert response.status_code == 200
+    assert "text/html" in response.headers["content-type"]
+
 def test_delete_todo_not_found():
     response = client.delete("/todos/999")
     assert response.status_code == 200
