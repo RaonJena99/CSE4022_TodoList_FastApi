@@ -68,15 +68,15 @@ def check_todo(todo_id : int):
     save_todos(todos)
     return todos
     
-@app.get("/", response_class=HTMLResponse)
-def read_root():
-    with open("templates/index.html", "r") as file:
-        content = file.read()
-    return HTMLResponse(content=content)
-
-
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 TEMPLATES_DIR = os.path.join(BASE_DIR, "templates")
+TEMPLATE_PATH = os.path.join(BASE_DIR, "templates", "index.html")
+
+@app.get("/", response_class=HTMLResponse)
+def read_root():
+    with open(TEMPLATE_PATH, "r") as file:
+        content = file.read()
+    return HTMLResponse(content=content)
 
 if os.path.exists(TEMPLATES_DIR):
     app.mount("/", StaticFiles(directory=TEMPLATES_DIR), name="static")
