@@ -241,6 +241,12 @@ async function DelTodo(edit) {
     showCancelButton: true,
     confirmButtonText: "Yes",
     cancelButtonText: "No",
+    customClass: {
+      popup: "del_popup",
+      title: "del_title",
+      confirmButton: "del_confirm",
+      cancelButton: "del_cancel",
+    },
   }).then(async (result) => {
     if (result.isConfirmed) {
       const id = edit.target.className;
