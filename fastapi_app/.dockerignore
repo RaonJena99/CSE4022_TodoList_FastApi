@@ -1,0 +1,8 @@
+# .dockerignore
+.git
+__pycache__/
+.env
+*.pyc
+venv/
+node_modules/
+id_rsa
