@@ -30,7 +30,7 @@ header {
   border-bottom: 1px solid rgb(40, 40, 40);
   font-size: 40px;
   color: white;
-  font-family: Trebuchet MS;
+  font-family: "Trebuchet MS", sans-serif;
   cursor: pointer;
 }
 
@@ -47,13 +47,13 @@ header {
   margin-bottom: 20px;
   font-size: 35px;
   color: white;
-  font-family: Verdana;
+  font-family: "Verdana", sans-serif;
 }
 
 .page_year {
   font-size: 16px;
   color: #5a5f67;
-  font-family: Verdana;
+  font-family: "Verdana", sans-serif;
 }
 
 .add_list {
@@ -186,7 +186,7 @@ header {
   cursor: pointer;
   position: relative;
   display: inline-block;
-  background: rgb(63, 65, 68);
+  background-color: rgb(63, 65, 68);
 }
 
 #completed_chk:hover {
@@ -214,7 +214,6 @@ header {
 
 .list_title {
   font-size: 22px;
-  margin-bottom: 5px;
   color: white;
   margin-bottom: 10px;
 }
@@ -315,7 +314,7 @@ header {
 .edit_title,
 .del_title {
   color: white;
-  font-family: Trebuchet MS;
+  font-family: "Trebuchet MS", sans-serif;
 }
 
 .edit_confirm,
