@@ -30,6 +30,30 @@ async function Reload() {
   location.reload(true);
 }
 
+const calTime = (timestamp) => {
+  const TIME_ZONE = 3240 * 10000 - 9 * 60 * 60 * 1000;
+  const start = new Date(timestamp);
+  const end = new Date(new Date().getTime() + TIME_ZONE);
+  const diff = (end - start) / 1000;
+
+  const times = [
+    { name: "Years", milliSeconds: 60 * 60 * 24 * 365 },
+    { name: "Months", milliSeconds: 60 * 60 * 24 * 30 },
+    { name: "Days", milliSeconds: 60 * 60 * 24 },
+    { name: "Hours", milliSeconds: 60 * 60 },
+    { name: "Minutes", milliSeconds: 60 },
+  ];
+
+  for (const value of times) {
+    const betweenTime = Math.floor(diff / value.milliSeconds);
+
+    if (betweenTime > 0) {
+      return `${betweenTime} ${value.name} ago`;
+    }
+  }
+  return "Just now";
+};
+
 async function fetchTodos() {
   const response = await fetch("/todos");
   const todos = await response.json();
@@ -57,7 +81,7 @@ async function fetchTodos() {
     const date = new Date(todo.id);
     const date_box = document.createElement("div");
     date_box.className = "date_box";
-    date_box.textContent = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+    date_box.textContent = `${calTime(date)}`;
 
     const completed_box = document.createElement("div");
     completed_box.className = "completed_box";
