@@ -55,72 +55,77 @@ const calTime = (timestamp) => {
 };
 
 async function fetchTodos() {
-  const response = await fetch("/todos");
-  const todos = await response.json();
+  try {
+    const response = await fetch("/todos");
+    const todos = await response.json();
 
-  todos.sort((a, b) => b.id - a.id);
+    todos.sort((a, b) => b.id - a.id);
 
-  const todo_list = document.querySelector("footer");
-  todo_list.innerHTML = "";
+    const todo_list = document.querySelector("footer");
+    todo_list.innerHTML = "";
 
-  todos.forEach((todo) => {
-    const todo_box = document.createElement("div");
-    todo_box.className = "todo_box";
+    todos.forEach((todo) => {
+      const todo_box = document.createElement("div");
+      todo_box.className = "todo_box";
 
-    const list_item = document.createElement("div");
-    list_item.className = "list_item";
+      const list_item = document.createElement("div");
+      list_item.className = "list_item";
 
-    const list_title = document.createElement("div");
-    list_title.className = "list_title";
-    list_title.innerText = `${todo.title}`;
+      const list_title = document.createElement("div");
+      list_title.className = "list_title";
+      list_title.innerText = `${todo.title}`;
 
-    const list_descript = document.createElement("div");
-    list_descript.className = "list_descript";
-    list_descript.innerText = `${todo.description}`;
+      const list_descript = document.createElement("div");
+      list_descript.className = "list_descript";
+      list_descript.innerText = `${todo.description}`;
 
-    const date = new Date(todo.id);
-    const date_box = document.createElement("div");
-    date_box.className = "date_box";
-    date_box.textContent = `${calTime(date)}`;
+      const date = new Date(todo.id);
+      const date_box = document.createElement("div");
+      date_box.className = "date_box";
+      date_box.textContent = `${calTime(date)}`;
 
-    const completed_box = document.createElement("div");
-    completed_box.className = "completed_box";
+      const completed_box = document.createElement("div");
+      completed_box.className = "completed_box";
 
-    const completed_chk = document.createElement("input");
-    completed_chk.className = todo.id;
-    completed_chk.id = "completed_chk";
-    completed_chk.type = "checkbox";
-    completed_chk.addEventListener("click", EditChk);
+      const completed_chk = document.createElement("input");
+      completed_chk.className = "completed_chk";
+      completed_chk.id = `completed_chk_${todo.id}`;
+      completed_chk.type = "checkbox";
+      completed_chk.addEventListener("click", EditChk);
 
-    if (todo.completed == false) {
-      completed_chk.checked = false;
-    } else {
-      completed_chk.checked = true;
-    }
+      if (todo.completed == false) {
+        completed_chk.checked = false;
+      } else {
+        completed_chk.checked = true;
+      }
 
-    const add_more = document.createElement("div");
-    add_more.className = "add_more";
+      const add_more = document.createElement("div");
+      add_more.className = "add_more";
 
-    const add_more_img = document.createElement("img");
-    add_more_img.id = todo.id;
-    add_more_img.className = "add_more_img";
-    add_more_img.src = "assets/more.svg";
+      const add_more_img = document.createElement("img");
+      add_more_img.id = todo.id;
+      add_more_img.className = "add_more_img";
+      add_more_img.src = "/static/assets/more.svg";
 
-    add_more_img.addEventListener("click", More_detail);
+      add_more_img.addEventListener("click", More_detail);
 
-    list_item.appendChild(list_title);
-    list_item.appendChild(list_descript);
+      list_item.appendChild(list_title);
+      list_item.appendChild(list_descript);
 
-    completed_box.appendChild(completed_chk);
-    add_more.appendChild(add_more_img);
+      completed_box.appendChild(completed_chk);
+      add_more.appendChild(add_more_img);
 
-    todo_box.appendChild(completed_box);
-    todo_box.appendChild(list_item);
-    todo_box.appendChild(date_box);
-    todo_box.appendChild(add_more);
+      todo_box.appendChild(completed_box);
+      todo_box.appendChild(list_item);
+      todo_box.appendChild(date_box);
+      todo_box.appendChild(add_more);
 
-    todo_list.appendChild(todo_box);
-  });
+      todo_list.appendChild(todo_box);
+    });
+  } catch (err) {
+    console.error("Error loading todos:", err);
+    Swal.fire("Error", "Failed to load To-Do items.", "error");
+  }
 }
 
 async function AddList() {
@@ -176,6 +181,11 @@ async function CreateList(event) {
 
   const title = document.querySelector(".add_title").value;
   const descript = document.querySelector(".add_descript").value;
+
+  if (!title.trim() || !descript.trim()) {
+    Swal.fire("Error", "Title and description are required.", "error");
+    return;
+  }
 
   const response = await fetch("/todos", {
     method: "POST",
@@ -247,13 +257,10 @@ async function EditTodo(edit) {
 async function EditChk(edit) {
   Minimization();
 
-  const id = edit.target.className;
-  const res = await fetch(`/check/${id}`, {
+  const raw_id = edit.target.id;
+  const id = raw_id.split("_")[2];
+  await fetch(`/check/${id}`, {
     method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ id }),
   });
 }
 

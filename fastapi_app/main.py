@@ -82,5 +82,6 @@ def read_root():
         content = file.read()
     return HTMLResponse(content=content)
 
-if os.path.exists(TEMPLATES_DIR):
-    app.mount("/", StaticFiles(directory=TEMPLATES_DIR), name="static")
+STATIC_DIR = os.path.join(BASE_DIR, "static")
+if os.path.exists(STATIC_DIR):
+    app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")

@@ -174,7 +174,7 @@ header {
   margin: 0px 10px 34px 0px;
 }
 
-#completed_chk {
+.completed_chk {
   appearance: none;
   box-sizing: content-box;
   background-clip: unset;
@@ -189,11 +189,11 @@ header {
   background-color: rgb(63, 65, 68);
 }
 
-#completed_chk:hover {
+.completed_chk:hover {
   background: rgb(86, 88, 92);
 }
 
-#completed_chk:checked::after {
+.completed_chk:checked::after {
   content: "✓";
   color: white;
   font-size: 1.8em;
