@@ -10,6 +10,9 @@ WORKDIR /app
 # 필요한 파일 복사
 COPY . .
 
+# 권한 부여 (읽기/쓰기)
+RUN chmod 666 todo.json
+
 # 의존성 설치
 RUN pip install --no-cache-dir -r requirements.txt
 
