@@ -1,0 +1,50 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg
+*.egg-info/
+dist/
+build/
+.env
+.venv/
+venv/
+pip-wheel-metadata/
+*.log
+
+# Byte-compiled / optimized / DLL files
+*.so
+*.dll
+*.dylib
+*.pyd
+
+# VSCode / IDE
+.vscode/
+.idea/
+
+# MacOS
+.DS_Store
+
+# Node.js (for frontend assets if used)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Static cache / temporary files
+static/assets/*.tmp
+*.swp
+*.bak
+*~
+
+# App data (if dynamically generated)
+todo.json
+
+# Test / coverage
+htmlcov/
+coverage.*
+.tox/
+.nox/
+.pytest_cache/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
