@@ -59,14 +59,13 @@ async function fetchTodos() {
     const response = await fetch("/todos");
     const todos = await response.json();
 
-    todos.sort((a, b) => b.id - a.id);
-
     const todo_list = document.querySelector("footer");
     todo_list.innerHTML = "";
 
     todos.forEach((todo) => {
       const todo_box = document.createElement("div");
       todo_box.className = "todo_box";
+      todo_box.dataset.id = todo.id;
 
       const list_item = document.createElement("div");
       list_item.className = "list_item";
@@ -121,6 +120,23 @@ async function fetchTodos() {
       todo_box.appendChild(add_more);
 
       todo_list.appendChild(todo_box);
+    });
+    new Sortable(todo_list, {
+      animation: 150,
+      onEnd: async function (evt) {
+        const NewOrder = [...todo_list.children].map((item) => {
+          const id = item.dataset.id;
+          return parseInt(id);
+        });
+
+        console.log(NewOrder);
+
+        await fetch("/todos/reorder", {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(NewOrder),
+        });
+      },
     });
   } catch (err) {
     console.error("Error loading todos:", err);

@@ -1,8 +1,9 @@
 from prometheus_fastapi_instrumentator import Instrumentator
-from fastapi import FastAPI,HTTPException
+from fastapi import FastAPI,HTTPException,Body
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
+from typing import List
 import json
 import os
 
@@ -32,6 +33,12 @@ def save_todos(todos):
     with open(TODOFile,"w") as file :
         json.dump(todos,file, indent=4)
         
+@app.get("/", response_class=HTMLResponse)
+def read_root():
+    with open(TEMPLATE_PATH, "r") as file:
+        content = file.read()
+    return HTMLResponse(content=content)
+
 @app.get("/todos", response_model=list[ToDoItem])
 def get_todos():
     return load_todos()
@@ -42,6 +49,22 @@ def create_todo(todo: ToDoItem):
     todos.append(todo.model_dump())
     save_todos(todos)
     return todo
+
+@app.put("/todos/reorder", response_model=List[ToDoItem]) 
+def update_todo_order(new_order: List[int] = Body(...)):
+    todos = load_todos()
+    todo_dict = {todo["id"]: todo for todo in todos}
+    
+    reordered_todos = []
+    for todo_id in new_order:
+        if todo_id in todo_dict:
+            reordered_todos.append(todo_dict[todo_id])
+
+    remaining = [todo for todo in todos if todo["id"] not in new_order]
+    reordered_todos.extend(remaining)
+
+    save_todos(reordered_todos)
+    return reordered_todos
 
 @app.put("/todos/{todo_id}", response_model=ToDoItem)
 def update_todo(todo_id : int, updated_todo : ToDoItem):
@@ -76,11 +99,6 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 TEMPLATES_DIR = os.path.join(BASE_DIR, "templates")
 TEMPLATE_PATH = os.path.join(BASE_DIR, "templates", "index.html")
 
-@app.get("/", response_class=HTMLResponse)
-def read_root():
-    with open(TEMPLATE_PATH, "r") as file:
-        content = file.read()
-    return HTMLResponse(content=content)
 
 STATIC_DIR = os.path.join(BASE_DIR, "static")
 if os.path.exists(STATIC_DIR):
