@@ -36,6 +36,18 @@ services:
     networks:
       - loadtest-net
 
+  influxdb:
+    image: influxdb:1.8
+    container_name: influxdb
+    ports:
+      - "8086:8086"
+    environment:
+      INFLUXDB_DB: jmeter
+    volumes:
+      - influxdb-data:/var/lib/influxdb
+    networks:
+      - loadtest-net
+
   grafana:
     image: grafana/grafana:latest
     container_name: grafana
@@ -99,4 +111,5 @@ volumes:
   sonarqube_data:
   sonarqube_logs:
   sonarqube_extensions:
+  influxdb-data:
   grafana-data:
