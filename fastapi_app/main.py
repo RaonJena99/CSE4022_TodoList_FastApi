@@ -10,40 +10,42 @@ from os import getenv
 import logging
 import time
 from multiprocessing import Queue
-from logging_loki import LokiQueueHandler
+from logging_loki import LokiQueueHandler, LokiProcessor
 
 app = FastAPI()
 
-# Prometheus 메트릭스 엔드포인트 (/metrics)
-Instrumentator().instrument(app).expose(app, endpoint="/metrics")
+# ── Loki 로거 설정 ─────────────────────────────────────────
+log_q = Queue(-1)
+LokiProcessor(log_q, batch_size=100, interval=5).start()   # ★ 반드시 실행
 
-loki_logs_handler = LokiQueueHandler(
-    Queue(-1),
-    url=getenv("LOKI_ENDPOINT"),
-    tags={"application": "fastapi"},
+loki_handler = LokiQueueHandler(
+    log_q,
+    url=os.getenv("LOKI_ENDPOINT", "http://localhost:3100/loki/api/v1/push"),
+    tags={"app": "fastapi"},    # 쿼리와 라벨 통일
     version="1",
 )
 
-# Custom access logger (ignore Uvicorn's default logging)
 custom_logger = logging.getLogger("custom.access")
 custom_logger.setLevel(logging.INFO)
+custom_logger.addHandler(loki_handler)
+custom_logger.propagate = False                       # 중복 방지
+# ──────────────────────────────────────────────────────────
 
-# Add Loki handler (assuming `loki_logs_handler` is correctly configured)
-custom_logger.addHandler(loki_logs_handler)
-
+# 요청 로깅 미들웨어 등록
+@app.middleware("http")
 async def log_requests(request: Request, call_next):
-    start_time = time.time()
+    start = time.time()
     response = await call_next(request)
-    duration = time.time() - start_time  # Compute response time
-
-    log_message = (
-        f'{request.client.host} - "{request.method} {request.url.path} HTTP/1.1" {response.status_code} {duration:.3f}s'
+    dur = time.time() - start
+    custom_logger.info(
+        '%s - "%s %s HTTP/%s" %s %.3fs',
+        request.client.host,
+        request.method,
+        request.url.path,
+        request.scope["http_version"],
+        response.status_code,
+        dur,
     )
-
-    # **Only log if duration exists**
-    if duration:
-        custom_logger.info(log_message)
-
     return response
 
 class ToDoItem(BaseModel):
