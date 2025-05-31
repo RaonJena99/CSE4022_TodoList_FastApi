@@ -31,6 +31,9 @@ custom_logger.setLevel(logging.INFO)
 # Add Loki handler (assuming `loki_logs_handler` is correctly configured)
 custom_logger.addHandler(loki_logs_handler)
 
+file_handler = logging.FileHandler("/var/log/fastapi.log")
+custom_logger.addHandler(file_handler)
+
 async def log_requests(request: Request, call_next):
     start_time = time.time()
     response = await call_next(request)
