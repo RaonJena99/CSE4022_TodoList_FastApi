@@ -11,7 +11,7 @@ services:
     environment:
       - LOKI_ENDPOINT=http://loki:3100/loki/api/v1/push
     volumes:
-      - ./logs:/var/log
+      - ./logs:/app/logs
 
   jmeter:
     build:
