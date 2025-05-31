@@ -1,5 +1,6 @@
 const add_list = document.querySelector(".add_list_img");
 const page_title = document.querySelector(".page_name");
+let hideCompleted = false;
 
 const day = new Map([
   [0, "Sunday"],
@@ -378,3 +379,22 @@ document.addEventListener("click", (event) => {
     Minimization();
   }
 });
+
+document.addEventListener("click", (e) => {
+  if (e.target.id === "toggle_completed") {
+    hideCompleted = !hideCompleted;
+    e.target.innerText = hideCompleted ? "Show Completed" : "Hide Completed";
+    filterCompleted();
+  }
+});
+
+function filterCompleted() {
+  document.querySelectorAll(".todo_box").forEach((box) => {
+    const checkbox = box.querySelector(".completed_chk");
+    if (hideCompleted && checkbox.checked) {
+      box.style.display = "none";
+    } else {
+      box.style.display = "";
+    }
+  });
+}

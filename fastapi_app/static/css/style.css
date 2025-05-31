@@ -349,3 +349,32 @@ header {
   box-shadow: none !important; /* 기본 그림자 제거 */
   border: 1px solid #d8d8d8;
 }
+
+.complete_butt {
+  position: absolute;
+  left: 13vw;
+  top: 134px;
+}
+
+#toggle_completed {
+  width: 150px;
+  height: 30px;
+  border: 0.5px solid rgb(46, 46, 46);
+  padding: none;
+  border-radius: 5px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  background: none;
+  color: white;
+  font-size: 16px;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  transition: transform 0.2s;
+  transform-origin: center;
+}
+
+#toggle_completed:hover {
+  transform: scale(1.03);
+  background: #37393c;
+  cursor: pointer;
+}
