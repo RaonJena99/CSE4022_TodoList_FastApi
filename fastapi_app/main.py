@@ -1,4 +1,4 @@
-# from prometheus_fastapi_instrumentator import Instrumentator
+from prometheus_fastapi_instrumentator import Instrumentator
 from fastapi import FastAPI,HTTPException,Body,Request
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
@@ -6,51 +6,51 @@ from pydantic import BaseModel
 from typing import List
 import json
 import os
-# from os import getenv
-# import logging
-# import time
-# from multiprocessing import Queue
-# from logging_loki import LokiQueueHandler
+from os import getenv
+import logging
+import time
+from multiprocessing import Queue
+from logging_loki import LokiQueueHandler
 
 app = FastAPI()
 
-# # Prometheus 메트릭스 엔드포인트 (/metrics)
-# Instrumentator().instrument(app).expose(app, endpoint="/metrics")
+# Prometheus 메트릭스 엔드포인트 (/metrics)
+Instrumentator().instrument(app).expose(app, endpoint="/metrics")
 
-# loki_logs_handler = LokiQueueHandler(
-#     Queue(-1),
-#     url=getenv("LOKI_ENDPOINT"),
-#     tags={"application": "fastapi"},
-#     version="1",
-# )
+loki_logs_handler = LokiQueueHandler(
+    Queue(-1),
+    url=getenv("LOKI_ENDPOINT"),
+    tags={"application": "fastapi"},
+    version="1",
+)
 
-# # Custom access logger (ignore Uvicorn's default logging)
-# custom_logger = logging.getLogger("custom.access")
-# custom_logger.setLevel(logging.INFO)
+# Custom access logger (ignore Uvicorn's default logging)
+custom_logger = logging.getLogger("custom.access")
+custom_logger.setLevel(logging.INFO)
 
-# # Add Loki handler (assuming `loki_logs_handler` is correctly configured)
-# custom_logger.addHandler(loki_logs_handler)
+# Add Loki handler (assuming `loki_logs_handler` is correctly configured)
+custom_logger.addHandler(loki_logs_handler)
 
-# LOG_PATH = "/app/logs/fastapi.log"
-# os.makedirs(os.path.dirname(LOG_PATH), exist_ok=True)  # 디렉토리 자동 생성
+LOG_PATH = "/app/logs/fastapi.log"
+os.makedirs(os.path.dirname(LOG_PATH), exist_ok=True)  # 디렉토리 자동 생성
 
-# file_handler = logging.FileHandler(LOG_PATH)
-# custom_logger.addHandler(file_handler)
+file_handler = logging.FileHandler(LOG_PATH)
+custom_logger.addHandler(file_handler)
 
-# async def log_requests(request: Request, call_next):
-#     start_time = time.time()
-#     response = await call_next(request)
-#     duration = time.time() - start_time  # Compute response time
+async def log_requests(request: Request, call_next):
+    start_time = time.time()
+    response = await call_next(request)
+    duration = time.time() - start_time  # Compute response time
 
-#     log_message = (
-#         f'{request.client.host} - "{request.method} {request.url.path} HTTP/1.1" {response.status_code} {duration:.3f}s'
-#     )
+    log_message = (
+        f'{request.client.host} - "{request.method} {request.url.path} HTTP/1.1" {response.status_code} {duration:.3f}s'
+    )
 
-#     # **Only log if duration exists**
-#     if duration:
-#         custom_logger.info(log_message)
+    # **Only log if duration exists**
+    if duration:
+        custom_logger.info(log_message)
 
-#     return response
+    return response
 
 class ToDoItem(BaseModel):
     id : int
@@ -144,4 +144,4 @@ STATIC_DIR = os.path.join(BASE_DIR, "static")
 if os.path.exists(STATIC_DIR):
     app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
     
-# app.middleware("http")(log_requests)
+app.middleware("http")(log_requests)
